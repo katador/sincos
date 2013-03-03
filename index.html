@@ -1,0 +1,106 @@
+<html>
+<head>
+	<title></title>
+		<meta http-equiv ="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv ="X-UA-Compatible" content="IE-8" />
+	<script src="js.js"></script>
+	<script src="TweenMax.js"></script>
+<style type="text/css">
+.circle{
+	width: 50px;
+	height: 50px;
+	background-color: #333;
+	position: absolute;
+	border-radius: 50%;
+
+}
+#main{
+	position: absolute;
+	width: 500px;
+	height: 500px;
+	/*border: solid 1px #333;*/
+}
+</style>
+<script type="text/javascript">
+
+$(window).load(function(){
+	salida();
+	centrar();
+	centrarBolas();
+});
+$(window).resize(function () {
+	centrar();
+});
+$(document).ready(function() {
+
+var total = 350;
+for(var i = 0; i < total; i++) {
+
+	$("#main").append('<div class="circle cell'+i+'"></div>');
+};
+// Stuff to do as soon as the DOM is ready;
+window.setInterval(salida, 13000);
+
+});
+function salida(){
+	//alert('hola');
+	var total = 350;
+	var figura = aleatorio(1,4);
+	var rota =aleatorio(10,1260);
+	var tween64 = TweenLite.to("#main",.8,{rotation:rota});
+	for (var a = 0; a < total; a++) {
+		var d1= aleatorio(2,20);
+		var d2= aleatorio(7,80);
+		var retro = a/6;
+		var namex=".cell"+a;
+		var uno=($("#main").innerHeight()-$('.circle').height())/2;
+		var dos=($("#main").innerWidth()-$('.circle').width())/2;
+		switch(figura){
+			case 1:
+			var dato1=(a*2)*(Math.cos(a*7))+uno;
+			var dato2=(a*2)*(Math.sin(a*7))+dos;
+			break;
+			case 2:
+			var dato1=(a*5)*(Math.cos(a/7))+uno;
+			var dato2=(a*5)*(Math.sin(a/7))+dos;
+			break;
+			case 3:
+			var dato1=(a*d1)*(Math.cos(a*d2))+uno;
+			var dato2=(a*d1)*(Math.sin(a*d2))+dos;
+			break;
+			case 4:
+		
+			var dato1=uno;
+			var dato2=dos;
+			var retro=0;
+			break;
+		}
+		TweenLite.to(namex, .3,{delay:retro,top:dato1,left:dato2,borderRadius:"50%"});
+	};
+
+}
+function aleatorio(a,b) {
+         return Math.round(Math.random()*(b-a)+parseInt(a));
+}
+function centrarBolas(){
+	var uno=($("#main").innerHeight()-$('.circle').height())/2;
+	var dos=($("#main").innerWidth()-$('.circle').width())/2;
+	var tween70 = TweenLite.to(".circle", .7,{top:uno,left:dos,ease:Back.easeInOut});
+}
+function centrar(){
+	var uno=($(window).innerHeight()-$('#main').height())/2;
+	var dos=($(window).innerWidth()-$('#main').width())/2;
+	var tween71 = TweenLite.to("#main", .7,{top:uno,left:dos,ease:Back.easeInOut});
+
+}
+
+</script>
+</head>
+<body>
+	<p>Presiona "Crtl " + "-" para alejarte y ver los gráficos completos.</p>
+	<div id="main">
+	</div>
+
+
+</body>
+</html>
